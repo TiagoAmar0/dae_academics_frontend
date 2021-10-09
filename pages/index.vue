@@ -1,6 +1,7 @@
 <template>
   <b-container>
     <b-table striped over :items="students" :fields="fields" />
+    <nuxt-link to="/create">Create a New Student</nuxt-link>
   </b-container>
 </template>
 
