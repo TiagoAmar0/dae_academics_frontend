@@ -8,28 +8,38 @@
     <b-table v-if="subjects.length" striped over :items="subjects" :fields="subjectsFields" />
     <p v-else>No subjects enrolled</p>
     <nuxt-link to="/students">Back</nuxt-link>
+    &nbsp;
+    <nuxt-link :to="`/students/${student.username}/send-email`">Send email</nuxt-link>
+
   </b-container>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       student: {},
       subjects: [],
-      subjectFields: ['code', 'name', 'courseCode', 'courseYear', 'schoolarYear']
-    }
+      subjectsFields: [
+        "code",
+        "name",
+        "courseCode",
+        "courseYear",
+        "schoolarYear",
+      ],
+    };
   },
   computed: {
-    username () {
-      return this.$route.params.username
-    }
+    username() {
+      return this.$route.params.username;
+    },
   },
-  created () {
-    this.$axios.$get(`/api/students/${this.username}`)
-      .then(student => this.student = student || {})
+  created() {
+    this.$axios
+      .$get(`/api/students/${this.username}`)
+      .then((student) => (this.student = student || {}))
       .then(() => this.$axios.$get(`/api/students/${this.username}/subjects`))
-      .then(subjects => this.subjects = subjects)
-  }
-}
+      .then((subjects) => (this.subjects = subjects));
+  },
+};
 </script>
